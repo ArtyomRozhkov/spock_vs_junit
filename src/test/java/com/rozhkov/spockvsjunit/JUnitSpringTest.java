@@ -2,6 +2,7 @@ package com.rozhkov.spockvsjunit;
 
 import com.rozhkov.spockvsjunit.api.controller.ClientController;
 import com.rozhkov.spockvsjunit.repository.ClientRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,11 +30,13 @@ class JUnitSpringTest {
   private MockMvc mvc;
 
   @Test
+  @DisplayName("поднятие всего контекста с проверкой создания бина-контроллера")
   void contextLoads() {
     assertThat(controller).isNotNull();
   }
 
   @Test
+  @DisplayName("вызов метода контроллера")
   void testGetClient() throws Exception {
     String clientId = "123";
     String expectedName = "Murat";

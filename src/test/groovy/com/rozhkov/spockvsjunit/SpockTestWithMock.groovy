@@ -12,69 +12,70 @@ class SpockTestWithMock extends Specification {
   ContractRepository contractRepository = Mock()
 
   @Subject
-  ClientService sut = new ClientService(clientRepository, contractRepository)
+  ClientService service = new ClientService(clientRepository, contractRepository)
 
-  def test1() {
+  def "проверка отсутствия взаимодействия с моками"() {
     when:
-    def available = sut.isFuncAvailable()
+    def available = service.isFuncAvailable()
 
     then:
     available
     0 * _
   }
 
-  def test2() {
+  def "задание значения, которое должен возвращать мок"() {
     given:
     def clientId = "1"
     String expectedName = "Ratibor"
     clientRepository.fetchClientName(clientId) >> expectedName
 
     when:
-    String actualName = sut.fetchClientName(clientId)
+    String actualName = service.fetchClientName(clientId)
 
     then:
     actualName == expectedName
   }
 
-  def test3() {
+  def "генерация исключения при вызове метода мока"() {
     given:
     clientRepository.fetchClientName(_) >>
       { throw new RuntimeException("boom!") }
 
     when:
-    sut.fetchClientName("client_id")
+    service.fetchClientName("client_id")
 
     then:
     def e = thrown(RuntimeException)
     e.message == "boom!"
   }
 
-  def test4() {
+  def "возврат моком цепочки значений"() {
     given:
     def clientId = "1"
     String firstExpectedName = "Ratibor"
     String secondExpectedName = "Mansur"
+
     clientRepository.fetchClientName(clientId) >>>
       [firstExpectedName, secondExpectedName] >>
       { throw new RuntimeException() }
 
-    when:
-    String actualName = sut.fetchClientName(clientId)
-    then:
+    when: "1 вызов мока"
+    String actualName = service.fetchClientName(clientId)
+    then: "ожидаем первое значение"
     actualName == firstExpectedName
 
-    when:
-    actualName = sut.fetchClientName(clientId)
-    then:
+    when: "2 вызов мока"
+    actualName = service.fetchClientName(clientId)
+    then: "ожидаем второе значение"
     actualName == secondExpectedName
 
-    when:
-    sut.fetchClientName(clientId)
-    then:
+    when: "3 вызов мока"
+    service.fetchClientName(clientId)
+    then: "3 и последующие вызовы будут генерировать исключение"
     thrown(RuntimeException)
   }
 
-  def test5() {
+  def "вычисление результата метода мока на основе входных параметров"() {
     given:
     String expectedName = "Ratibor"
     clientRepository.fetchClientName(_) >> { String id ->
@@ -86,22 +87,22 @@ class SpockTestWithMock extends Specification {
     }
 
     when:
-    String actualName = sut.fetchClientName("1")
+    String actualName = service.fetchClientName("1")
     then:
     actualName == expectedName
 
     when:
-    sut.fetchClientName(null)
+    service.fetchClientName(null)
     then:
     thrown(IllegalArgumentException)
   }
 
-  def test6() {
+  def "проверка вызова мока с определенными значениями"() {
     given:
     def clientName = "Ratibor"
 
     when:
-    sut.addNewClient(clientName)
+    service.addNewClient(clientName)
 
     then:
     1 * clientRepository

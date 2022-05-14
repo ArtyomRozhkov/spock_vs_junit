@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value
 public class Pair {
-    int a;
-    int b;
+    int key;
+    int value;
 }

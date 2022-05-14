@@ -4,12 +4,12 @@ import spock.lang.Specification
 
 class SpockStructuredTest extends Specification {
 
-  def test1() {
+  def "максимальное число между 1 и 2 равно 2"() {
     expect:
     Math.max(1, 2) == 2
   }
 
-  def test2() {
+  def "проверка конкатенации двух строк через пробел"() {
     given: // или setup:
     var str1 = "hello"
     var str2 = "world"

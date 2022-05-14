@@ -8,7 +8,7 @@ import spock.lang.Specification
 
 class SpockTestWithSmell extends Specification {
 
-  def "calling static methods on class instances"() {
+  def "вызов статического метода на экземпляре класса"() {
     given:
     var str1 = "1"
     var str2 = "2"
@@ -20,7 +20,7 @@ class SpockTestWithSmell extends Specification {
     resultStr.size() == str1.size() + str2.size() // wtf
   }
 
-  def "method stub with counting the number of calls"() {
+  def "заглушка метода с подсчетом количества вызовов"() {
     given:
     String clientId = "1"
     String expectedName = "Ratibor"
@@ -38,7 +38,7 @@ class SpockTestWithSmell extends Specification {
     1 * clientRepository.fetchClientName(clientId)
   }
 
-  def "stub of a non-existent method"() {
+  def "заглушка на несуществующий метод"() {
     given:
     String clientId = "1"
     String expectedName = "Ratibor"

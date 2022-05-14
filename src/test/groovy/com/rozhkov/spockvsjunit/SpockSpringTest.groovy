@@ -27,12 +27,12 @@ class SpockSpringTest extends Specification {
   @Autowired
   private MockMvc mvc
 
-  def contextLoads() {
-    expect: "the webController is created"
+  def "поднятие всего контекста с проверкой создания бина-контроллера"() {
+    expect: "контроллер создан"
     controller
   }
 
-  def testGetClient() { // without "throws Exception". Thanks Groovy
+  def "вызов метода контроллера"() { // без "throws Exception". Спасибо Groovy!
     given:
     String clientId = "123"
     String expectedName = "Murat"

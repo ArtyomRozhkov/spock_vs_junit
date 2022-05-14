@@ -20,7 +20,7 @@ class SpockSetupAndTurnDownTest extends Specification {
     println("cleanup after each")
   }
 
-  def test() {
+  def "модуль -1 равен 1"() {
     println("test")
     expect:
     Math.abs(-1) == 1

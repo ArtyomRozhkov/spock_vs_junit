@@ -1,3 +1,4 @@
+//file:noinspection GroovyAssignabilityCheck
 package com.rozhkov.spockvsjunit
 
 import com.rozhkov.spockvsjunit.service.TestService
@@ -7,16 +8,12 @@ import spock.lang.Subject
 import spock.lang.Unroll
 
 import java.time.DayOfWeek
-import java.util.stream.Stream
-
-import static java.util.stream.Collectors.toList
 
 class SpockTestWithParameters extends Specification {
   @Subject
-  TestService sut = new TestService()
+  TestService service = new TestService()
 
-  @Unroll
-  def test1() {
+  def "модуль любого числа должен быть >= 0"() {
     expect:
     Math.abs(param) >= 0
 
@@ -24,26 +21,25 @@ class SpockTestWithParameters extends Specification {
     param << [-1, 0, 1]
   }
 
-  @Unroll
-  def test2() {
+  def "все дни кроме субботы и воскресенья - рабочие"() {
     expect:
-    sut.isWorkingDay(dayOfWeek)
+    service.isWorkingDay(dayOfWeek)
 
     where:
-    dayOfWeek << Stream.of(DayOfWeek.values())
-      .filter(dayOfWeek -> dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != DayOfWeek.SUNDAY)
-      .collect(toList())
+    dayOfWeek << DayOfWeek.values()
+      .findAll { it != DayOfWeek.SATURDAY && it != DayOfWeek.SUNDAY }
   }
 
-  @Unroll("#pair.getA() in degree #pair.getB() is #result")
-  def test3() {
+  @Unroll("#map, pair = (#pair.getKey(), #pair.getValue()) - #contains")
+  def "проверка вхождения в map заданных пар"() {
     expect:
-    Math.pow(pair.getA(), pair.getB()) == result
+    (map.get(pair.getKey()) == pair.getValue()) == contains
 
     where:
-    pair           | result
-    new Pair(1, 1) | 1
-    new Pair(2, 2) | 2 * 2
-    new Pair(3, 3) | 3 * 3 * 3
+    map          | pair           || contains
+    [1: 1, 2: 2] | new Pair(1, 1) || true
+    [1: 2, 2: 1] | new Pair(2, 2) || false
+    [4: 4]       | new Pair(3, 3) || false
+    [:]          | new Pair(4, 4) || false
   }
 }

@@ -3,6 +3,7 @@ package com.rozhkov.spockvsjunit;
 import com.rozhkov.spockvsjunit.repository.ClientRepository;
 import com.rozhkov.spockvsjunit.repository.ContractRepository;
 import com.rozhkov.spockvsjunit.service.ClientService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -30,15 +31,17 @@ class JUnitTestWithMock {
   ContractRepository contractRepository;
 
   @InjectMocks
-  ClientService sut;
+  ClientService service;
 
   @Test
+  @DisplayName("проверка отсутствия взаимодействия с моками")
   void test1() {
-    assertTrue(sut.isFuncAvailable());
+    assertTrue(service.isFuncAvailable());
     verifyNoInteractions(clientRepository, contractRepository);
   }
 
   @Test
+  @DisplayName("задание значения, которое должен возвращать мок")
   void test2() {
     // given
     var clientId = "1";
@@ -47,48 +50,52 @@ class JUnitTestWithMock {
       .thenReturn(expectedName);
 
     // when
-    String actualName = sut.fetchClientName(clientId);
+    String actualName = service.fetchClientName(clientId);
 
     // then
     assertThat(actualName).isEqualTo(expectedName);
   }
 
   @Test
+  @DisplayName("генерация исключения при вызове метода мока")
   void test3() {
     doThrow(new RuntimeException("boom!"))
       .when(clientRepository).fetchClientName(any());
 
-    assertThatThrownBy(() -> sut.fetchClientName("client_id"))
+    assertThatThrownBy(() -> service.fetchClientName("client_id"))
       .isInstanceOf(RuntimeException.class)
       .hasMessage("boom!");
   }
 
   @Test
+  @DisplayName("возврат моком цепочки значений")
   void test4() {
     // given
     var clientId = "1";
     String firstExpectedName = "Ratibor";
     String secondExpectedName = "Mansur";
+
     when(clientRepository.fetchClientName(clientId))
       .thenReturn(firstExpectedName, secondExpectedName)
       .thenThrow(new RuntimeException());
 
     // when
-    String actualName = sut.fetchClientName(clientId);
+    String actualName = service.fetchClientName(clientId);
     // then
     assertThat(actualName).isEqualTo(firstExpectedName);
 
     // when
-    actualName = sut.fetchClientName(clientId);
+    actualName = service.fetchClientName(clientId);
     // then
     assertThat(actualName).isEqualTo(secondExpectedName);
 
     // expect
-    assertThatThrownBy(() -> sut.fetchClientName(clientId))
+    assertThatThrownBy(() -> service.fetchClientName(clientId))
       .isInstanceOf(RuntimeException.class);
   }
 
   @Test
+  @DisplayName("вычисление результата метода мока на основе входных параметров")
   void test5() {
     String expectedName = "Ratibor";
     when(clientRepository.fetchClientName(any()))
@@ -101,27 +108,27 @@ class JUnitTestWithMock {
       });
 
     // when
-    String actualName = sut.fetchClientName("1");
+    String actualName = service.fetchClientName("1");
     // then
     assertThat(actualName).isEqualTo(expectedName);
 
     // expect
-    assertThatThrownBy(() -> sut.fetchClientName(null))
+    assertThatThrownBy(() -> service.fetchClientName(null))
       .isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test
+  @DisplayName("проверка вызова мока с определенными значениями")
   void test6() {
     var clientName = "Ratibor";
 
-    sut.addNewClient(clientName);
+    service.addNewClient(clientName);
 
     verify(clientRepository)
       .addNewClient(eq(clientName), argThat(p -> p.size() == 0));
+    verifyNoMoreInteractions(clientRepository, contractRepository);
 
 //  verify(clientRepository).addNewClient(eq(clientName), phonesCaptor.capture());
 //  assertThat(phonesCaptor.getValue()).isEmpty();
-
-    verifyNoMoreInteractions(clientRepository, contractRepository);
   }
 }
