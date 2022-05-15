@@ -6,7 +6,7 @@ import com.rozhkov.spockvsjunit.service.ClientService
 import spock.lang.Specification
 import spock.lang.Subject
 
-class SpockTestWithMock extends Specification {
+class SpockMockTest extends Specification {
 
   ClientRepository clientRepository = Mock()
   ContractRepository contractRepository = Mock()

@@ -4,9 +4,11 @@ import com.rozhkov.spockvsjunit.repository.ClientRepository
 import com.rozhkov.spockvsjunit.repository.ContractRepository
 import com.rozhkov.spockvsjunit.service.ClientService
 import org.apache.logging.log4j.util.Strings
+import spock.lang.Ignore
 import spock.lang.Specification
 
-class SpockTestWithSmell extends Specification {
+@Ignore("для работы тестов необходимы доработки")
+class SpockSmellTest extends Specification {
 
   def "вызов статического метода на экземпляре класса"() {
     given:

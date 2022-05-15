@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-class JUnitTestWithParameters {
+class JUnitParameterizedTest {
   private final TestService service = new TestService();
 
   @ParameterizedTest

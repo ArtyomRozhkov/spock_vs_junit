@@ -9,7 +9,7 @@ import spock.lang.Unroll
 
 import java.time.DayOfWeek
 
-class SpockTestWithParameters extends Specification {
+class SpockParameterizedTest extends Specification {
   @Subject
   TestService service = new TestService()
 
