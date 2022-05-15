@@ -21,7 +21,7 @@ class JUnitTestWithParameters {
   private final TestService service = new TestService();
 
   @ParameterizedTest
-  @ValueSource(ints = {-1, 0, 1})
+  @ValueSource(ints = {-2, -1, 0, 1, 2})
   @DisplayName("модуль любого числа должен быть >= 0")
   void test1(int param) {
     assertThat(Math.abs(param)).isNotNegative();

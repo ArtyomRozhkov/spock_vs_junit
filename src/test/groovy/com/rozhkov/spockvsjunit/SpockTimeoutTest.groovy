@@ -10,11 +10,11 @@ import java.util.concurrent.TimeUnit
 class SpockTimeoutTest extends Specification {
 
   @Subject
-  TestService sut = new TestService()
+  TestService service = new TestService()
 
   @Timeout(value = 200, unit = TimeUnit.MILLISECONDS)
-  def test() { // throws секция не нужна
+  def "проверка успешного выполнения операции за указанный таймаут"() { // throws секция не нужна. Спасибо Groovy
     expect:
-    sut.doComplexCalculations() == 1
+    service.doComplexCalculations() == 1
   }
 }

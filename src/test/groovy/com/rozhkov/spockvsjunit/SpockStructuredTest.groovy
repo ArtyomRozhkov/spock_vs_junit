@@ -20,7 +20,7 @@ class SpockStructuredTest extends Specification {
     then:
     actual == "hello world"
 
-    cleanup:
+    cleanup: "очистка ресурсов при любом исходе теста"
     println("clean up")
   }
 }

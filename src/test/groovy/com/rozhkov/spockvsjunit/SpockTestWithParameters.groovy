@@ -18,7 +18,7 @@ class SpockTestWithParameters extends Specification {
     Math.abs(param) >= 0
 
     where:
-    param << [-1, 0, 1]
+    param << (-2..2)
   }
 
   def "все дни кроме субботы и воскресенья - рабочие"() {

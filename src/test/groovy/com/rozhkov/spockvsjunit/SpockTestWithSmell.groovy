@@ -25,8 +25,9 @@ class SpockTestWithSmell extends Specification {
     String clientId = "1"
     String expectedName = "Ratibor"
 
-    ClientRepository clientRepository = Mock()
-    clientRepository.fetchClientName(clientId) >> expectedName
+    ClientRepository clientRepository = Mock() {
+      fetchClientName(clientId) >> expectedName
+    }
 
     ClientService service = new ClientService(clientRepository, Stub(ContractRepository))
 
@@ -36,6 +37,20 @@ class SpockTestWithSmell extends Specification {
     then:
     actualName == expectedName
     1 * clientRepository.fetchClientName(clientId)
+  }
+
+  def "проверка вызова мока с определенными значениями"() {
+    given:
+    ClientRepository clientRepository = Mock()
+    ClientService service = new ClientService(clientRepository, Stub(ContractRepository))
+
+    when:
+    service.addNewClient("Ratibor")
+
+    then:
+    //interaction
+    String expectedName = "Ratibor"
+    1 * clientRepository.addNewClient(expectedName, _)
   }
 
   def "заглушка на несуществующий метод"() {
