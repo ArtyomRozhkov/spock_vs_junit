@@ -1,7 +1,7 @@
 package com.rozhkov.spockvsjunit.service;
 
 import com.rozhkov.spockvsjunit.repository.ClientRepository;
-import com.rozhkov.spockvsjunit.repository.ContractRepository;
+import com.rozhkov.spockvsjunit.repository.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class ClientService {
 
     private final ClientRepository clientRepository;
 
-    private final ContractRepository contractRepository;
+    private final NotificationService notificationService;
 
     public String fetchClientName(String id) {
         return clientRepository.fetchClientName(id);
@@ -25,5 +25,6 @@ public class ClientService {
 
     public void addNewClient(String clientName) {
         clientRepository.addNewClient(clientName, List.of());
+        notificationService.sendNotification(clientName, "add");
     }
 }

@@ -29,7 +29,6 @@ class JUnitSetupAndTurnDownTest {
   }
 
   @Test
-  @DisplayName("модуль -1 равен 1")
   void test() {
     log.info("test");
     assertThat(Math.abs(-1)).isEqualTo(1);

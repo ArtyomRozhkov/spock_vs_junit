@@ -30,7 +30,7 @@ class SpockParameterizedTest extends Specification {
       .findAll { it != DayOfWeek.SATURDAY && it != DayOfWeek.SUNDAY }
   }
 
-  @Unroll("#map, pair = (#pair.getKey(), #pair.getValue()) - #contains")
+  @Unroll("#map, pair = (#pair.key, #pair.value) - #contains")
   def "проверка вхождения в map заданных пар"() {
     expect:
     (map.get(pair.getKey()) == pair.getValue()) == contains

@@ -1,7 +1,7 @@
 package com.rozhkov.spockvsjunit
 
 import com.rozhkov.spockvsjunit.repository.ClientRepository
-import com.rozhkov.spockvsjunit.repository.ContractRepository
+import com.rozhkov.spockvsjunit.repository.NotificationService
 import com.rozhkov.spockvsjunit.service.ClientService
 import org.apache.logging.log4j.util.Strings
 import spock.lang.Ignore
@@ -31,7 +31,9 @@ class SpockSmellTest extends Specification {
       fetchClientName(clientId) >> expectedName
     }
 
-    ClientService service = new ClientService(clientRepository, Stub(ContractRepository))
+    ClientService service = new ClientService(
+      clientRepository, Stub(NotificationService)
+    )
 
     when:
     String actualName = service.fetchClientName(clientId)
@@ -44,7 +46,7 @@ class SpockSmellTest extends Specification {
   def "проверка вызова мока с определенными значениями"() {
     given:
     ClientRepository clientRepository = Mock()
-    ClientService service = new ClientService(clientRepository, Stub(ContractRepository))
+    ClientService service = new ClientService(clientRepository, Stub(NotificationService))
 
     when:
     service.addNewClient("Ratibor")
@@ -63,7 +65,10 @@ class SpockSmellTest extends Specification {
     ClientRepository clientRepository = Mock()
     clientRepository.fetchClientName(clientId, List.of()) >> expectedName
 
-    ClientService service = new ClientService(clientRepository, Stub(ContractRepository))
+    ClientService service = new ClientService(
+      clientRepository,
+      Stub(NotificationService)
+    )
 
     when:
     String actualName = service.fetchClientName(clientId)

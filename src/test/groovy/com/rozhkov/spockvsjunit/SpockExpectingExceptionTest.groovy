@@ -6,10 +6,10 @@ import spock.lang.Specification
 
 class SpockExpectingExceptionTest extends Specification {
 
-  @FailsWith(ArithmeticException)
+  @FailsWith(NumberFormatException)
   def "генерация исключения при делении на 0"() {
     expect:
-    1 / 0
+    Integer.parseInt("six")
   }
 
   def "генерация исключения с заданными параметрами"() {

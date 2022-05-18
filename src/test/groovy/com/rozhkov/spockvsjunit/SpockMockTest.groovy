@@ -1,7 +1,7 @@
 package com.rozhkov.spockvsjunit
 
 import com.rozhkov.spockvsjunit.repository.ClientRepository
-import com.rozhkov.spockvsjunit.repository.ContractRepository
+import com.rozhkov.spockvsjunit.repository.NotificationService
 import com.rozhkov.spockvsjunit.service.ClientService
 import spock.lang.Specification
 import spock.lang.Subject
@@ -9,10 +9,10 @@ import spock.lang.Subject
 class SpockMockTest extends Specification {
 
   ClientRepository clientRepository = Mock()
-  ContractRepository contractRepository = Mock()
+  NotificationService notificationService = Mock()
 
   @Subject
-  ClientService service = new ClientService(clientRepository, contractRepository)
+  ClientService service = new ClientService(clientRepository, notificationService)
 
   def "проверка отсутствия взаимодействия с моками"() {
     when:
@@ -107,6 +107,7 @@ class SpockMockTest extends Specification {
     then:
     1 * clientRepository
       .addNewClient(clientName, { it.size() == 0 })
+    1 * notificationService.sendNotification(clientName, "add")
     0 * _
   }
 }

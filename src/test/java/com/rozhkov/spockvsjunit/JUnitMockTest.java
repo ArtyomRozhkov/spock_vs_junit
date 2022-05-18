@@ -1,7 +1,7 @@
 package com.rozhkov.spockvsjunit;
 
 import com.rozhkov.spockvsjunit.repository.ClientRepository;
-import com.rozhkov.spockvsjunit.repository.ContractRepository;
+import com.rozhkov.spockvsjunit.repository.NotificationService;
 import com.rozhkov.spockvsjunit.service.ClientService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class JUnitMockTest {
   @Mock
   ClientRepository clientRepository;
   @Mock
-  ContractRepository contractRepository;
+  NotificationService notificationService;
 
   @InjectMocks
   ClientService service;
@@ -37,7 +37,7 @@ class JUnitMockTest {
   @DisplayName("проверка отсутствия взаимодействия с моками")
   void test1() {
     assertTrue(service.isFuncAvailable());
-    verifyNoInteractions(clientRepository, contractRepository);
+    verifyNoInteractions(clientRepository, notificationService);
   }
 
   @Test
@@ -126,7 +126,8 @@ class JUnitMockTest {
 
     verify(clientRepository)
       .addNewClient(eq(clientName), argThat(p -> p.size() == 0));
-    verifyNoMoreInteractions(clientRepository, contractRepository);
+    verify(notificationService).sendNotification(clientName, "add");
+    verifyNoMoreInteractions(clientRepository, notificationService);
 
 //  verify(clientRepository).addNewClient(eq(clientName), phonesCaptor.capture());
 //  assertThat(phonesCaptor.getValue()).isEmpty();

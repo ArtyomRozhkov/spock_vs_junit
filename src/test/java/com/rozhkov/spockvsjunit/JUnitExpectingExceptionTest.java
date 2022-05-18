@@ -12,8 +12,8 @@ class JUnitExpectingExceptionTest {
   @DisplayName("генерация исключения при делении на 0")
   void test1() {
     assertThrows(
-      ArithmeticException.class,
-      () -> {int c = 1 / 0;}
+      NumberFormatException.class,
+      () -> Integer.parseInt("six")
     );
   }
 
