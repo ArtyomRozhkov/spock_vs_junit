@@ -2,7 +2,7 @@
 package com.rozhkov.spockvsjunit
 
 import com.rozhkov.spockvsjunit.service.TestService
-import com.rozhkov.spockvsjunit.utils.Pair
+import com.rozhkov.spockvsjunit.model.Pair
 import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll

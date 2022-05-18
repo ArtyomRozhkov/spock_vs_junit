@@ -1,4 +1,4 @@
-package com.rozhkov.spockvsjunit.utils;
+package com.rozhkov.spockvsjunit.model;
 
 import lombok.Value;
 

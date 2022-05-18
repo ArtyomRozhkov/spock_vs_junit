@@ -1,7 +1,7 @@
 package com.rozhkov.spockvsjunit;
 
 import com.rozhkov.spockvsjunit.service.TestService;
-import com.rozhkov.spockvsjunit.utils.Pair;
+import com.rozhkov.spockvsjunit.model.Pair;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
