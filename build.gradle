@@ -29,6 +29,11 @@ dependencies {
     // optional dependencies for using Spock
     testRuntimeOnly 'net.bytebuddy:byte-buddy:1.12.8' // allows mocking of classes (in addition to interfaces)
     testRuntimeOnly 'org.objenesis:objenesis:3.2'      // allows mocking of classes without default constructor (together with ByteBuddy or CGLIB)
+
+    // you can use testRuntimeClasspath if you don't want to use spock-report-specific features in your Specs
+    testImplementation( "com.athaydes:spock-reports:2.1.1-groovy-3.0" ) {
+        transitive = false // this avoids affecting your version of Groovy/Spock
+    }
 }
 
 tasks.named('test') {

@@ -3,24 +3,11 @@ package com.rozhkov.spockvsjunit
 import com.rozhkov.spockvsjunit.repository.ClientRepository
 import com.rozhkov.spockvsjunit.repository.NotificationService
 import com.rozhkov.spockvsjunit.service.ClientService
-import org.apache.logging.log4j.util.Strings
 import spock.lang.Ignore
 import spock.lang.Specification
 
 @Ignore("для работы тестов необходимы доработки")
 class SpockSmellTest extends Specification {
-
-  def "вызов статического метода на экземпляре класса"() {
-    given:
-    var str1 = "1"
-    var str2 = "2"
-
-    when:
-    String resultStr = Strings.concat(str1, str2)
-
-    then:
-    resultStr.size() == str1.size() + str2.size() // wtf
-  }
 
   def "заглушка метода с подсчетом количества вызовов"() {
     given:
@@ -31,9 +18,7 @@ class SpockSmellTest extends Specification {
       fetchClientName(clientId) >> expectedName
     }
 
-    ClientService service = new ClientService(
-      clientRepository, Stub(NotificationService)
-    )
+    ClientService service = new ClientService(clientRepository, Stub(NotificationService))
 
     when:
     String actualName = service.fetchClientName(clientId)
