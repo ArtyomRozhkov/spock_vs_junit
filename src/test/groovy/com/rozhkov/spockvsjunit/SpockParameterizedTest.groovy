@@ -1,16 +1,17 @@
 //file:noinspection GroovyAssignabilityCheck
 package com.rozhkov.spockvsjunit
 
-import com.rozhkov.spockvsjunit.service.TestService
 import com.rozhkov.spockvsjunit.model.Pair
+import com.rozhkov.spockvsjunit.service.TestService
+import spock.lang.Shared
 import spock.lang.Specification
-import spock.lang.Subject
 import spock.lang.Unroll
 
 import java.time.DayOfWeek
 
 class SpockParameterizedTest extends Specification {
-  @Subject
+
+  @Shared
   TestService service = new TestService()
 
   def "модуль любого числа должен быть >= 0"() {

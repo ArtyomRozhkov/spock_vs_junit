@@ -17,14 +17,17 @@ class JUnitStructuredTest {
   @Test
   @DisplayName("проверка конкатенации двух строк через пробел")
   void test2() {
-    // given
+    //<editor-fold desc="given">
     var str1 = "hello";
     var str2 = "world";
+    //</editor-fold>
 
-    // when
+    //<editor-fold desc="when">
     String actual = String.join(" ", str1, str2);
+    //</editor-fold>
 
-    // then
+    //<editor-fold desc="then">
     assertThat(actual).isEqualTo("hello world");
+    //</editor-fold>
   }
 }
